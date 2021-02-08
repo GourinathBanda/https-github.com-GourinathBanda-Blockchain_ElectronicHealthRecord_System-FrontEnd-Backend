@@ -57,6 +57,7 @@ exports.verifyPatient = (req, res, next) => {
 };
 exports.verifyHospital = (req, res, next) => {
   console.log("user", req.user);
+  console.log(req.user.role, roles.HOSPITAL);
   if (req.user.role === roles.HOSPITAL) {
     next();
   } else {

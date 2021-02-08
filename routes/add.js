@@ -1,11 +1,13 @@
 var express = require("express");
-var router = express.Router();
 var cors = require("cors");
-var authenticate = require("../authenticate");
+var authenticate = require("../authenticate.js");
+
+var router = express.Router();
 
 router.post(
   "/",
   cors(),
+  authenticate.verifyUser,
   authenticate.verifyHospital,
   function (req, res, next) {
     if (!req.files) {
@@ -21,7 +23,7 @@ router.post(
         return res.status(500).send({ msg: "Error occured" });
       }
       // returing the response with file path and name
-      return res.status(200);
+      return res.status(200).send("Success");
       // .send({ name: myFile.name, path: `/${myFile.name}` });
     });
   }
