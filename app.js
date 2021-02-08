@@ -14,6 +14,8 @@ var addRouter = require("./routes/add");
 var app = express();
 var passport = require("passport");
 var authenticate = require("./authenticate");
+var fileUpload = require("express-fileupload");
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
@@ -26,6 +28,7 @@ app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(compression());
 app.use(helmet());
+app.use(fileUpload());
 
 mongoose
   // .connect(process.env.MONGODB_URL, { useNewUrlParser: true })
