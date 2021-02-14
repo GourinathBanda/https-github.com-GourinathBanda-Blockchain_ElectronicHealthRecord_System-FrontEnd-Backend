@@ -6,7 +6,6 @@ const config = require("./config.js");
 
 exports.register = async (req, res, next) => {
   try {
-    console.log(req.body);
     const reqUser = {
       username: req.body.username,
       firstname: req.body.firstName,
@@ -16,22 +15,20 @@ exports.register = async (req, res, next) => {
     };
 
     User.register(new User(reqUser), req.body.password, (err, account) => {
-      console.log(err, account);
       if (err) {
         return res.status(500).send("An error occurred: " + err);
       }
       return next();
     });
   } catch (err) {
-    console.log("error occured");
-    console.log(err);
+    console.log("error occured", err.msg);
     return res.status(500).send("An error occurred: " + err);
   }
 };
 
 exports.login = async (req, res, next) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     if (!req.body.username || !req.body.password) {
       return res.status(400).json({
         message: "Something is not right with your input",
@@ -51,7 +48,7 @@ exports.login = async (req, res, next) => {
         const token = jwt.sign(
           { _id: user._id, email: user.email },
           config.SECRET_KEY,
-          { expiresIn: 3600 }
+          { expiresIn: 36000 }
         );
         return res.json({ user: user.username, role: user.role, token });
       });
@@ -66,7 +63,7 @@ exports.autologin = async (req, res, next) => {
     passport.authenticate("jwt", { session: false }, (err, user, info) => {
       if (user) {
         req.login(user, { session: false }, (err) => {
-          console.log(user);
+          // console.log(user);
           if (!err) {
             const token = jwt.sign(
               { _id: user._id, email: user.email },

@@ -1,32 +1,46 @@
 var express = require("express");
 var cors = require("cors");
 var authenticate = require("../authenticate.js");
-
 var router = express.Router();
+const IPFS = require("ipfs");
+const node = IPFS.create({ silent: true });
 
 router.post(
   "/",
   cors(),
   authenticate.verifyUser,
   authenticate.verifyHospital,
-  function (req, res, next) {
+  async function (req, res, next) {
     if (!req.files) {
       return res.status(500).send({ msg: "file is not found" });
     }
-    // accessing the file
-    const myFile = req.files.file;
+    const file = req.files.file;
 
-    console.log("FILE UPLOADED?");
-    //  mv() method places the file inside public directory
-    myFile.mv(`./uploades/${myFile.name}`, function (err) {
-      if (err) {
-        console.log(err);
-        return res.status(500).send({ msg: "Error occured" });
-      }
-      // returing the response with file path and name
-      return res.status(200).send("Success");
-      // .send({ name: myFile.name, path: `/${myFile.name}` });
-    });
+    fileSize = file.size;
+    var hash = "";
+
+    const updateProgress = (bytesLoaded) => {
+      let percent = 100 - (bytesLoaded / fileSize) * 100;
+      console.log(percent, "%");
+    };
+
+    try {
+      const filesAdded = (await node).add(
+        {
+          path: file.name,
+          content: file.tempFilePath,
+        },
+        { wrapWithDirectory: true, progress: updateProgress }
+      );
+
+      hash = (await filesAdded).cid.toString();
+      // console.log("hash", hash);
+      // console.log("filesAdded", filesAdded);
+      return res.status(200).send({ hash: hash });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).send({ msg: err.message });
+    }
   }
 );
 

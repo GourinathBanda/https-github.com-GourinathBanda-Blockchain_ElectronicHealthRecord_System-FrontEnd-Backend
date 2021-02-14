@@ -28,7 +28,13 @@ app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(compression());
 app.use(helmet());
-app.use(fileUpload());
+// app.use(fileUpload());
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/uploads/",
+  })
+);
 
 mongoose
   // .connect(process.env.MONGODB_URL, { useNewUrlParser: true })
