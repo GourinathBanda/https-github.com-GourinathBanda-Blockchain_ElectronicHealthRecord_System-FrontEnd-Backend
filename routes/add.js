@@ -16,6 +16,7 @@ router.post(
     // accessing the file
     const myFile = req.files.file;
 
+    console.log("FILE UPLOADED?");
     //  mv() method places the file inside public directory
     myFile.mv(`./uploades/${myFile.name}`, function (err) {
       if (err) {

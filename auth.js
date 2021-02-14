@@ -1,8 +1,8 @@
-const User = require("../schemas/userSchema.js");
+const User = require("./schemas/userSchema.js");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const config = require("../config.js");
+const config = require("./config.js");
 
 exports.register = async (req, res, next) => {
   try {

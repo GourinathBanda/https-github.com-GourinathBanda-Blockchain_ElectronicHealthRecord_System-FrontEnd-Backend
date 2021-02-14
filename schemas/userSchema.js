@@ -28,6 +28,22 @@ var userSchema = new Schema({
     default: "patient",
     required: true,
   },
+  aadhar: {
+    type: String,
+    unique: true,
+  },
+  publicKey: {
+    type: String,
+    unique: true,
+  },
+  scAccountAddress: {
+    type: String,
+    unique: true,
+  },
+  phoneNo: {
+    type: Number,
+    unique: true,
+  },
 });
 
 // admin: {
