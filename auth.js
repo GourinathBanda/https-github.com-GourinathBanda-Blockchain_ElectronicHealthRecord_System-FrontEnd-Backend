@@ -50,7 +50,12 @@ exports.login = async (req, res, next) => {
           config.SECRET_KEY,
           { expiresIn: 36000 }
         );
-        return res.json({ user: user.username, role: user.role, token });
+        return res.json({
+          user: user.username,
+          role: user.role,
+          publicKey: user.publicKey,
+          token,
+        });
       });
     })(req, res);
   } catch (err) {
@@ -68,11 +73,12 @@ exports.autologin = async (req, res, next) => {
             const token = jwt.sign(
               { _id: user._id, email: user.email },
               config.SECRET_KEY,
-              { expiresIn: 3600 }
+              { expiresIn: 36000 }
             );
             return res.json({
               username: user.username,
               role: user.role,
+              publicKey: user.publicKey,
               token,
             });
           }
