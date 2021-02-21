@@ -24,7 +24,7 @@ usersRouter.post(
 usersRouter
   .route("/user")
   .options(cors(), (req, res) => {
-    res.senStatus(200);
+    res.sendStatus(200);
   })
   .get(cors(), authenticate.verifyUser, function (req, res, next) {
     User.findById(req.user._id)
@@ -39,7 +39,8 @@ usersRouter
       )
       .catch((err) => console.log(err));
   })
-  .put(cors(), function (req, res, next) {
+  .put(cors(), authenticate.verifyUser, function (req, res, next) {
+    console.log(req.user)
     User.findByIdAndUpdate(req.user._id, { $set: req.body }, { new: true })
       .then(
         (user) => {

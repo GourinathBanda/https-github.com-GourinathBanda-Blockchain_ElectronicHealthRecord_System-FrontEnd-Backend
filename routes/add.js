@@ -34,7 +34,7 @@ router.post(
       );
 
       hash = (await filesAdded).cid.toString();
-      // console.log("hash", hash);
+      console.log("hash", hash);
       // console.log("filesAdded", filesAdded);
       // return res.status(200).send({ hash: hash });
       return res.status(200).send();
