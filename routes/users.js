@@ -70,7 +70,7 @@ usersRouter.get(
             scAccountAddress: user.scAccountAddress,
             aadhar: user.aadhar,
           };
-          res.json(detils);
+          return res.json(detils);
         }
         res.sendStatus(404);
       },
