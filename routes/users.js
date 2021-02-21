@@ -55,14 +55,22 @@ usersRouter
   });
 
 usersRouter.get(
-  "/checkexists/:username",
+  "/basicdetails/:username",
   cors(),
   authenticate.verifyUser,
   function (req, res, next) {
     User.findOne({ username: req.params.username }).then(
       (user) => {
         if (user != null) {
-          return res.sendStatus(200);
+          res.statusCode = 200;
+          res.setHeader("Content-Type", "application/json");
+          const detils = {
+            firstname: user.firstname,
+            lastname: user.lastname,
+            scAccountAddress: user.scAccountAddress,
+            aadhar: user.aadhar,
+          };
+          res.json(detils);
         }
         res.sendStatus(404);
       },
