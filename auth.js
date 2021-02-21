@@ -53,6 +53,7 @@ exports.login = async (req, res, next) => {
         return res.json({
           user: user.username,
           role: user.role,
+          scAccountAddress: user.scAccountAddress,
           publicKey: user.publicKey,
           token,
         });
@@ -78,6 +79,7 @@ exports.autologin = async (req, res, next) => {
             return res.json({
               username: user.username,
               role: user.role,
+              scAccountAddress: user.scAccountAddress,
               publicKey: user.publicKey,
               token,
             });
