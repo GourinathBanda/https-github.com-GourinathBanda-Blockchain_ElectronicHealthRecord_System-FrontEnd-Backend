@@ -40,7 +40,7 @@ usersRouter
       .catch((err) => console.log(err));
   })
   .put(cors(), authenticate.verifyUser, function (req, res, next) {
-    console.log(req.user)
+    console.log(req.user);
     User.findByIdAndUpdate(req.user._id, { $set: req.body }, { new: true })
       .then(
         (user) => {
