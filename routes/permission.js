@@ -22,7 +22,7 @@ permissionRouter.get(
         res.sendStatus(404);
         return;
       }
-      res.send({ usr: usr.publicKey });
+      res.send({ usr: usr.encryptionKey });
       return;
     });
   }

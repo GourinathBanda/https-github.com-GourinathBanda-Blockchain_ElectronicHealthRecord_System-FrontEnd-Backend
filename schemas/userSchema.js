@@ -32,7 +32,7 @@ var userSchema = new Schema({
     type: String,
     unique: true,
   },
-  publicKey: {
+  encryptionKey: {
     type: String,
     unique: true,
   },

@@ -54,7 +54,7 @@ exports.login = async (req, res, next) => {
           user: user.username,
           role: user.role,
           scAccountAddress: user.scAccountAddress,
-          publicKey: user.publicKey,
+          encryptionKey: user.encryptionKey,
           token,
         });
       });
@@ -80,7 +80,7 @@ exports.autologin = async (req, res, next) => {
               username: user.username,
               role: user.role,
               scAccountAddress: user.scAccountAddress,
-              publicKey: user.publicKey,
+              encryptionKey: user.encryptionKey,
               token,
             });
           }
