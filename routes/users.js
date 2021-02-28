@@ -58,6 +58,7 @@ usersRouter.get(
   "/basicdetails/:username",
   cors(),
   authenticate.verifyUser,
+  authenticate.verifyHospital,
   function (req, res, next) {
     User.findOne({ username: req.params.username }).then(
       (user) => {
@@ -69,6 +70,7 @@ usersRouter.get(
             lastname: user.lastname,
             scAccountAddress: user.scAccountAddress,
             aadhar: user.aadhar,
+            encryptionKey: user.encryptionKey,
           };
           return res.json(detils);
         }
