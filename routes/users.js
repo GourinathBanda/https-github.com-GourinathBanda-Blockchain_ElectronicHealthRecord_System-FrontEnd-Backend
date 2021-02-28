@@ -92,7 +92,7 @@ usersRouter.get("/autologin", cors(), function (req, res, next) {
 usersRouter.get(
   "/logout",
   cors(),
-  authenticate.verifyUser,
+  // authenticate.verifyUser,
   function (req, res, next) {
     // authController.logout(req, res, next);
     res.status(200).send("Logout Success");
