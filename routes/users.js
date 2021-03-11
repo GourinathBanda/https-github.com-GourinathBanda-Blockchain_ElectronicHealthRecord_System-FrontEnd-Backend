@@ -83,6 +83,33 @@ usersRouter.get(
   }
 );
 
+usersRouter.get(
+  "/hospitalKey/:username",
+  cors(),
+  authenticate.verifyUser,
+  authenticate.verifyHospital,
+  function (req, res, next) {
+    User.findOne({ username: req.params.username }).then(
+      (user) => {
+        if (user != null) {
+          res.statusCode = 200;
+          res.setHeader("Content-Type", "application/json");
+          const detils = {
+            firstname: user.firstname,
+            lastname: user.lastname,
+            encryptionKey: user.encryptionKey,
+          };
+          return res.json(detils);
+        }
+        res.sendStatus(404);
+      },
+      (err) => {
+        console.log(err.message);
+      }
+    );
+  }
+);
+
 usersRouter.post("/login", cors(), function (req, res, next) {
   authController.login(req, res, next);
 });
