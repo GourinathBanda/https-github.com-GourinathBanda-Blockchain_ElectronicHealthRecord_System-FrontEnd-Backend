@@ -34,11 +34,17 @@ var userSchema = new Schema({
   },
   encryptionKey: {
     type: String,
-    unique: true,
+    index: {
+      unique: true,
+      partialFilterExpression: { encryptionKey: { $type: "string" } }
+    }
   },
   scAccountAddress: {
     type: String,
-    unique: true,
+    index: {
+      unique: true,
+      partialFilterExpression: { scAccountAddress: { $type: "string" } }
+    }
   },
   phoneNo: {
     type: Number,
