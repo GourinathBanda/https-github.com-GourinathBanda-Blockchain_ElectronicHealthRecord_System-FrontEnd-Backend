@@ -87,7 +87,7 @@ usersRouter.get(
   "/hospitalKey/:username",
   cors(),
   authenticate.verifyUser,
-  authenticate.verifyHospital,
+  authenticate.verifyPatient,
   function (req, res, next) {
     User.findOne({ username: req.params.username }).then(
       (user) => {
