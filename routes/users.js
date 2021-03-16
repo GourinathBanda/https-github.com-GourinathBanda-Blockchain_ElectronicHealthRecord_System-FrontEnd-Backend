@@ -55,12 +55,15 @@ usersRouter
   });
 
 usersRouter.get(
-  "/basicdetails/:username",
+  "/basicdetails/:method/:id",
   cors(),
   authenticate.verifyUser,
   authenticate.verifyHospital,
   function (req, res, next) {
-    User.findOne({ username: req.params.username }).then(
+    const search = {};
+    search[req.params.method] = req.params.id;
+    console.log(search);
+    User.findOne(search).then(
       (user) => {
         if (user != null) {
           res.statusCode = 200;
