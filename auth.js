@@ -51,10 +51,11 @@ exports.login = async (req, res, next) => {
           { expiresIn: 36000 }
         );
         return res.json({
-          user: user.username,
+          username: user.username,
           role: user.role,
           scAccountAddress: user.scAccountAddress,
           encryptionKey: user.encryptionKey,
+          aadhar: user.aadhar,
           token,
         });
       });
@@ -81,6 +82,7 @@ exports.autologin = async (req, res, next) => {
               role: user.role,
               scAccountAddress: user.scAccountAddress,
               encryptionKey: user.encryptionKey,
+              aadhar: user.aadhar,
               token,
             });
           }
