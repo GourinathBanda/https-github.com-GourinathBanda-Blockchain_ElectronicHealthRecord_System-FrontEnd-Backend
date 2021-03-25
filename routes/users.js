@@ -68,14 +68,14 @@ usersRouter.get(
         if (user != null) {
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
-          const detils = {
+          const details = {
             firstname: user.firstname,
             lastname: user.lastname,
             scAccountAddress: user.scAccountAddress,
             aadhar: user.aadhar,
             encryptionKey: user.encryptionKey,
           };
-          return res.json(detils);
+          return res.json(details);
         }
         res.sendStatus(404);
       },
@@ -97,14 +97,32 @@ usersRouter.get(
         if (user != null) {
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
-          const detils = {
+          const details = {
             firstname: user.firstname,
             lastname: user.lastname,
             encryptionKey: user.encryptionKey,
           };
-          return res.json(detils);
+          return res.json(details);
         }
         res.sendStatus(404);
+      },
+      (err) => {
+        console.log(err.message);
+      }
+    );
+  }
+);
+
+usersRouter.get(
+  "/checkuser/:username",
+  cors(),
+  function (req, res, next) {
+    User.findOne({ username: req.params.username }).then(
+      (user) => {
+        if (user != null) {
+          res.sendStatus(404);
+        }
+        res.sendStatus(200);
       },
       (err) => {
         console.log(err.message);
