@@ -25,7 +25,7 @@ var userSchema = new Schema({
   },
   role: {
     type: String,
-    default: "patient",
+    default: "PATIENT",
     required: true,
   },
   aadhar: {
@@ -34,32 +34,14 @@ var userSchema = new Schema({
   },
   encryptionKey: {
     type: String,
-    index: {
-      unique: true,
-      partialFilterExpression: { encryptionKey: { $type: "string" } }
-    }
   },
   scAccountAddress: {
     type: String,
-    index: {
-      unique: true,
-      partialFilterExpression: { scAccountAddress: { $type: "string" } }
-    }
   },
   phoneNo: {
     type: Number,
-    unique: true,
   },
 });
-
-// admin: {
-//   type: Boolean,
-//   default: false,
-// },
-// seller: {
-//     type: Boolean,
-//     default: false,
-//   },
 
 userSchema.plugin(passportLocalMongoose);
 
