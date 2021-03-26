@@ -12,6 +12,8 @@ exports.register = async (req, res, next) => {
       lastname: req.body.lastname,
       email: req.body.email,
       role: req.body.role,
+      aadhar: req.body.aadhar,
+      phoneNo: req.body.phoneNo,
     };
 
     User.register(new User(reqUser), req.body.password, (err, account) => {
