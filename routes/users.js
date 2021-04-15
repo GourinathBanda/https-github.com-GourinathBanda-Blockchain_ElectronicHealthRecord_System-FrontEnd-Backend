@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const mongoose = require("mongoose");
+const roles = require('../roles.js')
 var cors = require("cors");
 var User = require("../schemas/userSchema");
 var authenticate = require("../authenticate");
@@ -10,7 +11,7 @@ var authController = require("../auth");
 var usersRouter = express.Router();
 
 usersRouter.use(bodyParser.json());
-
+console.log('Roles', roles)
 usersRouter.post(
   "/register",
   cors(),
@@ -58,7 +59,16 @@ usersRouter.get(
   "/basicdetails/:method/:id",
   cors(),
   authenticate.verifyUser,
-  authenticate.verifyHospital,
+  (req, res, next) => {
+    if (req.user.role === roles.HOSPITAL || req.user.role === roles.INSURER) {
+      return next();
+    } else {
+      var err = new Error("You are not authorized to perform this operation!");
+      err.status = 403;
+      return next(err);
+    }
+  },
+  // authenticate.verifyHospital,
   function (req, res, next) {
     const search = {};
     search[req.params.method] = req.params.id;
